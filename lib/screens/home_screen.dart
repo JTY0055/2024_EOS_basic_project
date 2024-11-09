@@ -1,3 +1,5 @@
+import 'package:eos_todolist/widgets/add_button.dart';
+import 'package:eos_todolist/widgets/todo_item.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,13 +11,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List toDoLists = [];
+
   @override
   void initState() {
-    super.initState();
     toDoLists.add("11111111");
     toDoLists.add("22222222");
     toDoLists.add("33333333");
+    super.initState();
   }
+
+  
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -64,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 500,
+                      height: MediaQuery.of(context).size.height - 400,
                       decoration: BoxDecoration(
                         color: Color(0xFFA4C639).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
@@ -92,7 +99,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 50, left: 40, right: 25),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height - 450,
+                      child: ListView.builder(
+                          itemCount: toDoLists.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ToDoItem(
+                                title: toDoLists[index],
+                                onDelete: (){
+                              setState(() {
+                                toDoLists.removeAt(index);
+                              });
+                            });
+                          },
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 30,
+                      right: 50,
+                      child: AddButton(
+                        onPressed: (){
+                          setState(() {
+                            toDoLists.add("+++++++++");
+                          });
+                        },
+                      ))
                 ],
               )
             ]));
